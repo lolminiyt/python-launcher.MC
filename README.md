@@ -7,3 +7,4 @@ subprocess
 requests
 time
 sys
+https://codeberg.org/JakobDev/minecraft-launcher-lib/
