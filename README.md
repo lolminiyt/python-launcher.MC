@@ -7,4 +7,4 @@ subprocess
 requests
 time
 sys
-https://codeberg.org/JakobDev/minecraft-launcher-lib/
+https://codeberg.org/JakobDev/minecraft-launcher-lib/ > minecraft_launcher_lib solo esa carpeta q contiene archivos py
