@@ -7,6 +7,8 @@ import os
 import subprocess
 import requests
 import time
+import tkinter
+import customtkinter
 import sys
 MC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 GAME_DIR = r"./.minecraft"
@@ -14,18 +16,6 @@ ASSETS_DIR = r"./assets"
 NATIVES_DIR = r"./natives"
 JAVA_HOME = r"./runtime/java11/"
 import minecraft_launcher_lib
-import customtkinter
-import configparser
-###########################################################################
-config_file = configparser.ConfigParser()
-config_file.add_section("Launcher_Settings")
-config_file.set("Launcher_Settings", "Mostrar Solo Versiones Instaladas", "Si")
-config_file.set("Launcher_Settings", "Mostrar Snapshots", "No")
-with open(r"configurations.ini", 'w') as configfileObj:
-    config_file.write(configfileObj)
-    configfileObj.flush()
-    configfileObj.close()
-###########################################################################
 
 customtkinter.set_appearance_mode("System")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -56,8 +46,6 @@ callback = {
     "setMax": set_max
 }
 
-print("Launcher para minecraft 1.16.5/1.19.2 portable, optimizado y creado en python")
-
 uuid_dict = {}
 
 def generate_uuid(strfname: str, uuid_dict: dict) -> str:
@@ -79,7 +67,6 @@ def main():
             "username": str(strfname.get()),
             "uuid": str(uuid_dict.get(strfname.get(), "")),  # Obtener la uuid del diccionario
             "token": "T",
-            "jvmArguments": strfram.get()
          }   
         minecraft_command = minecraft_launcher_lib.command.get_minecraft_command(version_select.get(), minecraft_directory, options)
 
@@ -113,16 +100,17 @@ def main():
         minecraft_launcher_lib.forge.install_forge_version(forge_version, minecraft_directory)
 
     window = Tk()
-    window.title("Minecraft Launcher")
+    window.title("Manzana")
     window.resizable(width=False, height=False)
-
-
+    window.geometry("435x85")
+    window.configure(background="black")
 
     versions = minecraft_launcher_lib.utils.get_available_versions(minecraft_directory)
     version_list = []
 
-    for i in versions:
-        version_list.append(i["id"])
+    for version in versions:
+        if version["type"] == "release":
+            version_list.append(version["id"])
 
     strfname = StringVar()
     uuid = StringVar()
@@ -130,22 +118,22 @@ def main():
 
     font_style = ("Helvetica", 10)
 
-    Label(window, text="Version:",font=font_style).grid(row=3, column=0)
-    version_select = Combobox(window, values=version_list, width=25)
+
+    customtkinter.CTkLabel(window, text="Version:").grid(row=3, column=0)
+    version_select = customtkinter.CTkComboBox(window, values=version_list, width=155)  
     version_select.grid(row=3, column=1)
-    version_select.current(0)
 
-    labeld = Label(window, text = 'Username',font=font_style).grid(row=1, column=0)
-    dname = Entry(window, justify='left', textvariable = strfname).grid(row=1, column=1) #strlname get input 
+    customtkinter.CTkLabel(window, text="Username").grid(row=1, column=0)
+    dname = customtkinter.CTkEntry(window, justify='left', textvariable=strfname)
+    dname.grid(row=1, column=1)
 
-    Button(window, text="Launch", command=launch,font=font_style).grid(row=5, column=1)
+    customtkinter.CTkButton(window, text="Launch", command=launch).grid(row=5, column=1)
     print(generate_uuid)
 
-    Button(window, text="Install Fabric ", command=fabric,font=font_style).grid(row=5, column=0)
+    customtkinter.CTkButton(window, text="Install Fabric", command=fabric).grid(row=5, column=0)
 
-    Button(window, text="Install Forge ", command=forge,font=font_style).grid(row=5, column=2)
-
-    mainloop()
+    customtkinter.CTkButton(window, text="Install Forge", command=forge).grid(row=5, column=2)
+    window.mainloop()
 
 
 if __name__ == "__main__":
