@@ -3,9 +3,11 @@ import keyboard
 from tkinter import Tk, Label, Entry, Button, mainloop
 from tkinter.ttk import Combobox
 from tkinter import *
+import configparser
 import os
 import subprocess
 import requests
+from PIL import ImageTk, Image
 import time
 import tkinter
 import customtkinter
@@ -22,8 +24,20 @@ customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-bl
 
 import shutil
 
-current_max = 0
+if not os.path.exists('config.png'):
+    url2 = 'https://i.ibb.co/gtKRxXf/free-settings-icon-3110-thumb-2793537920.png'
+    r2 = requests.get(url2, stream=True)
+    with open('free-settings-icon-3110-thumb-2793537920.png', 'wb') as f:
+        shutil.copyfileobj(r2.raw, f)
+    try:
+        os.rename('free-settings-icon-3110-thumb-2793537920.png', 'config.png')
+    except FileExistsError:
+        pass
 
+current_max = 0
+##############################################################################
+
+##############################################################################
 
 def set_status(status: str):
     print(status)
@@ -98,6 +112,27 @@ def main():
             return
         print(os.getcwd())
         minecraft_launcher_lib.forge.install_forge_version(forge_version, minecraft_directory)
+    
+    class ToplevelWindow(customtkinter.CTkToplevel):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.geometry("400x300")
+            
+    def optionmenu_callback(choice):
+        print("optionmenu dropdown clicked:", choice)
+
+        combobox = customtkinter.CTkOptionMenu(master=window,
+                                       values=["option 1", "option 2"],
+                                       command=optionmenu_callback)
+        combobox.pack(padx=20, pady=10)
+        combobox.set("option 2")  # set initial value
+
+    def open_toplevel():
+        toplevel_window = None
+        if toplevel_window is None or not toplevel_window.winfo_exists():
+            toplevel_window = ToplevelWindow()  # create window if its None or destroyed
+        else:
+            toplevel_window.focus()  # if window exists focus it
 
     window = Tk()
     window.title("Manzana")
@@ -129,6 +164,10 @@ def main():
 
     customtkinter.CTkButton(window, text="Launch", command=launch).grid(row=5, column=1)
     print(generate_uuid)
+
+    photo = customtkinter.CTkImage(Image.open(r"C:\Users\Thinkpad\Documents\Python\.minecraft\config.png"))
+    button = customtkinter.CTkButton(master=window, image=photo, text="", width=2, command=open_toplevel)
+    button.place(relx=1, rely=0.2, anchor=tkinter.E)
 
     customtkinter.CTkButton(window, text="Install Fabric", command=fabric).grid(row=5, column=0)
 
