@@ -1,4 +1,3 @@
-## bufixes -  el launcher crasheaba si no se tenia una carpeta .minecraft - fabric installer no usaba el java incluido, usaba el java asignado a la pc
 import keyboard 
 from tkinter import Tk, Label, Entry, Button, mainloop
 from tkinter.ttk import Combobox
@@ -34,31 +33,7 @@ if not os.path.exists('config.png'):
     except FileExistsError:
         pass
 
-current_max = 0
-##############################################################################
-
-##############################################################################
-
-def set_status(status: str):
-    print(status)
-
-
-def set_progress(progress: int):
-    if current_max != 0:
-        print(f"{progress}/{current_max}")
-
-
-def set_max(new_max: int):
-    global current_max
-    current_max = new_max
-
 minecraft_directory = r"./"
-
-callback = {
-    "setStatus": set_status,
-    "setProgress": set_progress,
-    "setMax": set_max
-}
 
 uuid_dict = {}
 
@@ -118,6 +93,7 @@ def main():
             super().__init__(*args, **kwargs)
             self.geometry("400x300")
             
+            
     def optionmenu_callback(choice):
         print("optionmenu dropdown clicked:", choice)
 
@@ -167,7 +143,7 @@ def main():
 
     photo = customtkinter.CTkImage(Image.open(r"C:\Users\Thinkpad\Documents\Python\.minecraft\config.png"))
     button = customtkinter.CTkButton(master=window, image=photo, text="", width=2, command=open_toplevel)
-    button.place(relx=1, rely=0.2, anchor=tkinter.E)
+    button.place(relx=1, rely=0.15, anchor=tkinter.E)
 
     customtkinter.CTkButton(window, text="Install Fabric", command=fabric).grid(row=5, column=0)
 
