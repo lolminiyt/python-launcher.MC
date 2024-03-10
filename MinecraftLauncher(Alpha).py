@@ -1,4 +1,3 @@
-from tkinter import ttk
 import customtkinter as ctk
 import minecraft_launcher_lib
 import os
@@ -41,7 +40,7 @@ def CTB(root, text, x, y, values):
  
     combobox = ctk.CTkComboBox(root, values=values, corner_radius=0)
     combobox.place(x=x + 75, y=y) 
-    CTkScrollableDropdown(combobox, values=values, justify="left", button_color="transparent", corner_radius=1)
+    CTkScrollableDropdown(combobox, values=values, justify="left", button_color="transparent", frame_corner_radius=0)
     return label, combobox
 
 strfram= ctk.StringVar()
