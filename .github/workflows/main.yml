@@ -14,5 +14,8 @@ jobs:
       - name: PyInstaller Action
         uses: Martin005/pyinstaller-action@v1.2.0 
         with:
+          python_ver: '3.8'
           spec: 'MinecraftLauncher(Alpha).py'
           requirements: 'requirements.txt'
+          python_arch: 'x32'
+          upload_exe_with_name: 'Minecraft Launcher'
