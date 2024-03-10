@@ -1,3 +1,15 @@
-              - name: PyInstaller Action
-                uses: Martin005/pyinstaller-action@v1.2.0
-            
+name: PyInstaller Action
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: PyInstaller Action
+        uses: Martin005/pyinstaller-action@v1.2.0 
