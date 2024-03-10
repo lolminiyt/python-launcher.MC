@@ -31,7 +31,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='old\\Minecraft.ico',
+    icon='Minecraft.ico',
 )
 coll = COLLECT(
     exe,
